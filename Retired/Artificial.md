@@ -30,23 +30,23 @@ sudo nano etc/hosts
 
 Once we fix this, we enter the website:
 
-![](../../../attachments/Pasted%20image%2020251102170444.png)
+![](../attachments/Pasted%20image%2020251102170444.png)
 
 I checked the source code of the website but there was nothing there. Also I ran `gobuster` but I also found nothing, so I went to register to make an account:
 
-![](../../../attachments/Pasted%20image%2020251102171640.png)
+![](../attachments/Pasted%20image%2020251102171640.png)
 
 And then I logged in:
 
-![](../../../attachments/Pasted%20image%2020251102171726.png)
+![](../attachments/Pasted%20image%2020251102171726.png)
 
 I, then, clicked on the `requirements` and the `Dockerfile` which downloaded a `requirements.txt` and a `Dockerfile` respectively.
 
-![](../../../attachments/Pasted%20image%2020251102213911.png)
+![](../attachments/Pasted%20image%2020251102213911.png)
 
 Also, when I click on the `Browse` button to upload a model it searches for .h5 file.
 
-![](../../../attachments/Pasted%20image%2020251102214048.png)
+![](../attachments/Pasted%20image%2020251102214048.png)
 
 So I have to upload a malicious model, and the reason that they included the `Dockerfile` is to ensure that the payload is using `python 3.8` or else the payload may not work.
 
@@ -64,7 +64,7 @@ sudo docker run -it -v $(pwd):/mnt artificial
 
 So now we need to create a python payload in the directory `/mnt`. When searching the Internet for a tenserflow malicious code RCE I found this github repo: https://github.com/Splinter0/tensorflow-rce
 
-![](../../../attachments/Pasted%20image%2020251102220417.png)
+![](../attachments/Pasted%20image%2020251102220417.png)
 
 
 And if we go to the `exploit.py` we will find a python payload, but we are going to change it a little bit (specifically the `os.system()`) and we get this code:
@@ -94,7 +94,7 @@ Inside the container that we created we run the python script:
 python3 exploit.py
 ```
 
-![](../../../attachments/Pasted%20image%2020251102221356.png)
+![](../attachments/Pasted%20image%2020251102221356.png)
 
 and we get the `exploit.h5` model. So in the kali linux machine we starting to listen on port 9001:
 ```sh
@@ -102,18 +102,18 @@ nc -lvnp 9001
 ```
 
 Then we upload the exploit.h5 on the website:
-![](../../../attachments/Pasted%20image%2020251102221757.png)
+![](../attachments/Pasted%20image%2020251102221757.png)
 
 and we get a shell:
 
-![](../../../attachments/Pasted%20image%2020251102221853.png)
+![](../attachments/Pasted%20image%2020251102221853.png)
 
 When we enter a web application it is good to go for the database, so we type:
 ```sh
 find . -type f
 ```
 
-![](../../../attachments/Pasted%20image%2020251102222246.png)
+![](../attachments/Pasted%20image%2020251102222246.png)
 
 and we see that we find a `users.db`
 
@@ -125,14 +125,14 @@ sqlite3 users.db '.tables'
 model  user 
 ```
 
-![](../../../attachments/Pasted%20image%2020251102223600.png)
+![](../attachments/Pasted%20image%2020251102223600.png)
 
 and then:
 ```sh
 sqlite3 users.db 'select * from user;'
 ```
 
-![](../../../attachments/Pasted%20image%2020251102223705.png)
+![](../attachments/Pasted%20image%2020251102223705.png)
 
 We copy paste the password hashes of users in the web application in the local machine in a file called `hashes`
 We are gonna try to crack them with `hashcat`
@@ -143,7 +143,7 @@ hashcat -m 0 hashes /usr/share/wordlists/rockyou.txt
 
 and after it finished we got the passwords:
 
-![](../../../attachments/Pasted%20image%2020251102224912.png)
+![](../attachments/Pasted%20image%2020251102224912.png)
 
 The previous to the last password belongs to the user `gael` so we are gonna to log in to the target as `gael` via SSH:
 
@@ -151,5 +151,5 @@ The previous to the last password belongs to the user `gael` so we are gonna to 
 ssh gael@artificial.htb
 ```
 
-![](../../../attachments/Pasted%20image%2020251102225401.png)
+![](../attachments/Pasted%20image%2020251102225401.png)
 
