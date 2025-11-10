@@ -132,6 +132,7 @@ I found this GitHub page that explains how to do it manually:
 In the attacking machine I write the following C code `nvme.c`:
 
 ![](../attachments/Pasted%20image%2020251110204246.png)
+
 I compile the exploit:
 
 ![](../attachments/Pasted%20image%2020251110204341.png)
