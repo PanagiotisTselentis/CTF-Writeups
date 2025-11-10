@@ -21,14 +21,14 @@ Nmap done: 1 IP address (1 host up) scanned in 22.84 seconds
 
 We go to the site which runs at port 80:
 
-![](../../../attachments/Pasted%20image%2020251011203415.png)
+![](../attachments/Pasted%20image%2020251011203415.png)
 
 and seeing the source code:
 ![[Pasted image 20251011203507.png]]
 
 so we go to the directory: 10.129.37.146/nibbleblog
 
-![](../../../attachments/Pasted%20image%2020251011203558.png)
+![](../attachments/Pasted%20image%2020251011203558.png)
 
 We run a `gobuster`
 ```shell
@@ -64,11 +64,11 @@ Starting gobuster in directory enumeration mode
 
 In exploring the resulting paths, `/nibbleblog/content` is interesting, and has dir lists enabled. Digging deeper, there's page at `/nibbleblog/content/private/users.xml`
 
-![](../../../attachments/Pasted%20image%2020251011231153.png)
+![](../attachments/Pasted%20image%2020251011231153.png)
 
 We go to the path`/admin.php` that we found with `gobuster` earlier:
 
-![](../../../attachments/Pasted%20image%2020251011231322.png)
+![](../attachments/Pasted%20image%2020251011231322.png)
 
 We use as username `admin` , but we don't know the password and it doesn't have a default password like admin, or password. Also again, by looking at the `users.xml` we see that there is a black list protection. So we can't login brute-force with a tool like `Hydra`.
 
@@ -96,7 +96,7 @@ Shellcodes: No Results
 
 So we open `metasploit`:
 
-![](../../../attachments/Pasted%20image%2020251013110227.png)
+![](../attachments/Pasted%20image%2020251013110227.png)
 
 We configures the info that we need:
 ```shell
