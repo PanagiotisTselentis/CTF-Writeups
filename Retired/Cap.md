@@ -20,10 +20,10 @@ Answer: 3
 2) After running a "Security Snapshot", the browser is redirected to a path of the format `/[something]/[id]`, where `[id]` represents the id number of the scan. What is the `[something]`?
 
 I go to the `10.10.10.245`:
-![site](../../../attachments/Pasted%20image%2020251011203415.png)
+![site](../attachments/Pasted%20image%2020251011203415.png)
 
 I go to `Security Snapshot` and I see:
-![securitysnapshot](../../../attachments/Pasted%20image%2020251018175033.png)
+![securitysnapshot](../attachments/Pasted%20image%2020251018175033.png)
 
 Answer: data
 
@@ -38,10 +38,10 @@ Answer: yes
 
 I checked different ids and I downloaded the PCAP files and opened them in WireShark. The one that had sensitive data was id 0. It had a FTP stream and if we right click and select "Follow"->"TCP Stream":
 
-![sdasa](../../../attachments/Pasted%20image%2020251018184358.png)
+![sdasa](../attachments/Pasted%20image%2020251018184358.png)
 
 we will see the whole dialogue and we see the username "nathan" with the password "Buck3tH4TF0RM3!"
-![dsasdaa](../../../attachments/Pasted%20image%2020251018184518.png)
+![dsasdaa](../attachments/Pasted%20image%2020251018184518.png)
 
 Answer: 0
 
@@ -58,13 +58,13 @@ ssh nathan@10.10.10.245
 
 and we are able to connect.
 
-![5](../../../attachments/Pasted%20image%2020251018184816.png)
+![5](../attachments/Pasted%20image%2020251018184816.png)
 
 Answer: SSH
 
 7) Submit the flag located in the nathan user's home directory.
 
-![6](../../../attachments/Pasted%20image%2020251018184911.png)
+![6](../attachments/Pasted%20image%2020251018184911.png)
 
 **Answer: f447ce687556e50df8b0e21535898aa0**
 
@@ -90,11 +90,11 @@ and then linpeas.sh will run
 
 After it is finished I check the lines that are in RED/YELLOW legend.
 
-![7](../../../attachments/Pasted%20image%2020251018192759.png)
+![7](../attachments/Pasted%20image%2020251018192759.png)
 
 first I find this CVE and I try to exploit it but I could't do it, so I try to find another line and I find this:
 
-![8](../../../attachments/Pasted%20image%2020251018193004.png)
+![8](../attachments/Pasted%20image%2020251018193004.png)
 
 So the privilege escalation will happen using Capabilities. A site, which helped me with this section, is the [following](https://www.hackingarticles.in/linux-privilege-escalation-using-capabilities/) 
 
@@ -125,6 +125,6 @@ Answer: /usr/bin/python3.8
 
 9) Submit the flag located in root's home directory.
 
-![9](../../../attachments/Pasted%20image%2020251018195427.png)
+![9](../attachments/Pasted%20image%2020251018195427.png)
 
 Answer: bd58ab7567dcfa4a9aaea9dee4d6af8b
