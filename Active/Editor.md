@@ -122,6 +122,7 @@ After a lot of search I find that `ndsudo` has a known vulnerability `CVE-2024-3
 that I can use the metasploit framework.
 
 ![](../attachments/Pasted%20image%2020251110200751.png)
+
 But unfortunately I couldn't use the metasploit framework because it expected an already active session from metasploit where I have an initial foothold, so I didn't use it.
 
 We will use the manual way:
