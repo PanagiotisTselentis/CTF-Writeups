@@ -6,7 +6,7 @@ mkdir nmap
 nmap -sV -sC -oA nmap/soulmate 10.10.11.86
 ```
 
-![](../../../attachments/Pasted%20image%2020251111111405.png)
+![](../attachments/Pasted%20image%2020251111111405.png)
 
 We see that the server is configured to respond to the name `soulmate.htb` rather than the IP address `10.10.11.86`. See to resolve that we have to edit the `/etc/hosts` file and write  `10.10.11.86  soulmate.htb`.
 
@@ -16,7 +16,7 @@ sudo nano /etc/hosts
 
 After that if we type the IP address of the machine to our browser we will be able to see the Web application:
 
-![](../../../attachments/Pasted%20image%2020251111111734.png)
+![](../attachments/Pasted%20image%2020251111111734.png)
 
 First, I ran `gobuster` for directory enumeration with the command:
 ```sh
@@ -31,7 +31,7 @@ So I tried a different strategy to run `ffuf` and modifying the `Host` header f
 ffuf -u http://soulmate.htb -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -H "Host: FUZZ.soulmate.htb" --fs 652
 ```
 
-![](../../../attachments/Pasted%20image%2020251111122712.png)
+![](../attachments/Pasted%20image%2020251111122712.png)
 
 but I was getting a lot of garbage output and I couldn't find anything useful, so I used this command instead, where I would filter only the responses 200, 301 and 302 but I was seeing that for response 302 the most common size was 154 (which was garbage) so I would filter the `size 154` 
 
@@ -39,18 +39,18 @@ but I was getting a lot of garbage output and I couldn't find anything useful, s
 ffuf -u http://soulmate.htb -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-110000.txt -H "Host: FUZZ.soulmate.htb" --mc 200,301,302 -fs 154 -s
 ```
 
-![](../../../attachments/Pasted%20image%2020251111122224.png)
+![](../attachments/Pasted%20image%2020251111122224.png)
 and I found the `ftp` directory.
 
 So we have to edit the `/etc/hosts` file again and add this directory  `10.10.11.86  soulmate.htb ftp.soulmate.htb`.
 
 And now if we type `http://ftp.soulmate.htb` on our browser we are redirected to `http://ftp.soulmate.htb/WebInterface/login.html`
 
-![](../../../attachments/Pasted%20image%2020251111123216.png)
+![](../attachments/Pasted%20image%2020251111123216.png)
 
 But I couldn't login as admin or with the my account credentials, so i checked the source code for more information.
 
-![](../../../attachments/Pasted%20image%2020251111125306.png)
+![](../attachments/Pasted%20image%2020251111125306.png)
 
 ```js
 .register("/WebInterface/new-ui/sw.js?v=11.W.657-2025_03_08_07_52")
@@ -58,41 +58,41 @@ But I couldn't login as admin or with the my account credentials, so i checked t
 
 and searching on the Internet about known vulnerabilities about `CrushFTP` I found this 
 
-![](../../../attachments/Pasted%20image%2020251111125445.png)
+![](../attachments/Pasted%20image%2020251111125445.png)
 
 so I understood that the `11.w.657` was something like a version and then I found the vulnerability `CVE-2025-31161`. Searching for this vulnerability I found this GitHub repo:
 
-![](../../../attachments/Pasted%20image%2020251111125631.png)
+![](../attachments/Pasted%20image%2020251111125631.png)
 
 so I downloaded the Python script and then I ran this command:
 ```python
 python3 cve-2025-31161.py --target_host ftp.soulmate.htb --port 80 --target_user root --new_user new --password 12345
 ```
 
-![](../../../attachments/Pasted%20image%2020251111130245.png)
+![](../attachments/Pasted%20image%2020251111130245.png)
 
 So then we just created a new user named `new` with root privileges so all I had to do was to login in on the server.
 
-![](../../../attachments/Pasted%20image%2020251111130142.png)
+![](../attachments/Pasted%20image%2020251111130142.png)
 
 and we are in!!!
 
-![](../../../attachments/Pasted%20image%2020251111130319.png)
+![](../attachments/Pasted%20image%2020251111130319.png)
 
 After that I went to the `Admin` panel:
 
-![](../../../attachments/Pasted%20image%2020251111130418.png)
+![](../attachments/Pasted%20image%2020251111130418.png)
 
 and then to `User Manager` in order to find some user credentials.
 
 So on the left side there were some users, so I clicked the user `ben` which he had already a password, then I clicked `Generate Random Password`
 in which a password was created, I pressed `Use this` and then `Save`
 
-![](../../../attachments/Pasted%20image%2020251111130848.png)
+![](../attachments/Pasted%20image%2020251111130848.png)
 
 I tried to ssh into `ben` but I couldn't for some reason that I didn't know, so instead I tried to login as `ben` in the `CrushFTP`.
 
-![](../../../attachments/Pasted%20image%2020251111132931.png)
+![](../attachments/Pasted%20image%2020251111132931.png)
 
 After I was logged in as `ben` I went to to `webProd` and I was that I could upload any PHP file.
 
@@ -250,7 +250,7 @@ All I had to change was `ip` and `port`. Then I uploaded the `reverse_shell.php`
 
 I opened another terminal to run `netcat` on the port that I put:
 
-![](../../../attachments/Pasted%20image%2020251111135613.png)
+![](../attachments/Pasted%20image%2020251111135613.png)
 
 So all I had to do was run the PHP file to get a shell. At first, I tried to access the file at `http://ftp.soulmate.htb/#/webProd/reverse_shell.php` but this only triggered a download of the file instead of actually executing it.
 
@@ -260,21 +260,21 @@ However, the upload is not placed directly under `/webProd`, but instead it is s
 
 So I just browse to `http://soulmate.htb/reverse_shell.php` and then I get a shell:
 
-![](../../../attachments/Pasted%20image%2020251111140237.png)
+![](../attachments/Pasted%20image%2020251111140237.png)
 
 I upgrade the shell to an interactive one:
 ```python
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
 
-![](../../../attachments/Pasted%20image%2020251111140504.png)
+![](../attachments/Pasted%20image%2020251111140504.png)
 
 Firstly, I examine the `/etc/passwd` file, which contains users with valid shell entries:
 ```sh
 cat /etc/passwd | grep -i bash
 ```
 
-![](../../../attachments/Pasted%20image%2020251111140702.png)
+![](../attachments/Pasted%20image%2020251111140702.png)
 
 We find two users on the system: `root` and `ben`, so a next logical move would be to lateral movement to `ben`
 ```sh
@@ -283,7 +283,7 @@ ls -l /home/ben
 
 But we do not have permission to access Ben's home directory:
 
-![](../../../attachments/Pasted%20image%2020251111140808.png)
+![](../attachments/Pasted%20image%2020251111140808.png)
 
 Next I try to investigate the local listening ports on the machine:
 
@@ -291,48 +291,48 @@ Next I try to investigate the local listening ports on the machine:
 ss -tlp
 ```
 
-![](../../../attachments/Pasted%20image%2020251111141525.png)
+![](../attachments/Pasted%20image%2020251111141525.png)
 
 We see that the port `2222` is open, so we check what is running on this port with `netcat`:
 ```sh
 nc 127.0.0.1 2222
 ```
 
-![](../../../attachments/Pasted%20image%2020251111141733.png)
+![](../attachments/Pasted%20image%2020251111141733.png)
 
 We see that it's running `Erlang 5.2.9`. I try to find directories and files with the name `erlang`:
 ```
 find / -name erlang* 2>/dev/null
 ```
 
-![](../../../attachments/Pasted%20image%2020251111142441.png)
+![](../attachments/Pasted%20image%2020251111142441.png)
 
 After a lot of time of searching I found `erlang_login` and there I went to the file `start.escript` and when I read this file I found this line:
 
 
-![](../../../attachments/Pasted%20image%2020251111142555.png)
+![](../attachments/Pasted%20image%2020251111142555.png)
 
 So we found `ben`'s password. All we have to do is to ssh into that account and find the user flag!!!:
 
-![](../../../attachments/Pasted%20image%2020251111142814.png)
+![](../attachments/Pasted%20image%2020251111142814.png)
 
 
 ## Privilege Escalation
 
 I tried `sudo -l` but it didn't work:
 
-![](../../../attachments/Pasted%20image%2020251111142912.png)
+![](../attachments/Pasted%20image%2020251111142912.png)
 
 On my Kali machine I went to the directory `/usr/share/peass/linpeas` and I opened a Python server on port 8003
 
 Then I downloaded `linpeas.sh` to the target machine and I ran it:
 
-![](../../../attachments/Pasted%20image%2020251111143048.png)
+![](../attachments/Pasted%20image%2020251111143048.png)
 
-![](../../../attachments/Pasted%20image%2020251111143119.png)
+![](../attachments/Pasted%20image%2020251111143119.png)
 But again I didn't find anything useful. After that I tried to see the SUIDs:
 
-![](../../../attachments/Pasted%20image%2020251111143858.png)
+![](../attachments/Pasted%20image%2020251111143858.png)
 
 But again nothing useful.
 
@@ -341,17 +341,17 @@ Then I thought that since `Erlang` is SSH and it is running on port 2222 maybe I
 ssh ben@localhost -p 2222
 ```
 
-![](../../../attachments/Pasted%20image%2020251111144240.png)
+![](../attachments/Pasted%20image%2020251111144240.png)
 
 After searching on the Internet, I found the vulnerability `CVE-2025-32433` a critical vulnerability disclosed in the Erlang/OTP SSH implementation that allows unauthenticated remote code execution (RCE).
 
 So since I was already in the SSH, I searched for code execution codes or OS commands. I found in the website `vuln.be`:
 
-![](../../../attachments/Pasted%20image%2020251111145745.png)
+![](../attachments/Pasted%20image%2020251111145745.png)
 
 So using the `os:cmd` functionality I executed commands as root and I retrieved the root flag!!!
 
-![](../../../attachments/Pasted%20image%2020251111145359.png)
+![](../attachments/Pasted%20image%2020251111145359.png)
 
 
 
