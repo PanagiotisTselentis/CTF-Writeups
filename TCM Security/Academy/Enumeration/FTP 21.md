@@ -8,7 +8,7 @@ and I did list the files and I saw a `note.txt` so I got it:
 
 ![](attachments/Pasted%20image%2020251125152100.png)
 
-and then I read the file and the contents were some credentials:
+and then I read the file and the contents were some credentials and password `cd73502828457d15655bbd7a63fb0bc8`:
 
 ```
 Hello Heath !
@@ -30,3 +30,4 @@ We can always adapt it to our needs.
 -jdelta
 ```
 
+Searching the Internet I found that this hashing is `MD5` so I decrypted the hash and the password is `student`
