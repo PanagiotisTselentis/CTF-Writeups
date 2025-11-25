@@ -49,11 +49,163 @@ mysql -u grimmie -p
 
 ![](attachments/Pasted%20image%2020251125160435.png)
 
+```mysql
+select version();
+```
+
+![](attachments/Pasted%20image%2020251125161820.png)
+
+
 
 ```mysql
 show databases;
 ```
 
 
+
 ![](attachments/Pasted%20image%2020251125160538.png)
+
+I chose the `onilnecourse` database:
+```mysql
+use onlinecourse;
+show tables;
+```
+
+
+![](attachments/Pasted%20image%2020251125162026.png)
+
+I saw the `admin` table and I wanted to see what it contains:
+
+```mysql
+describe admin;
+```
+
+
+![](attachments/Pasted%20image%2020251125162134.png)
+
+```mysql
+select username, password from admin;
+```
+
+
+![](attachments/Pasted%20image%2020251125162216.png)
+
+and this is again `MD5` hash so decrypting it the password is `admin` and I am able to login as `admin` in the academy website.
+
+
+Now seeing the database `mysql`
+```mysql
+use mysql;
+show tables;
+
+MariaDB [mysql]> show tables;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| column_stats              |
+| columns_priv              |
+| db                        |
+| event                     |
+| func                      |
+| general_log               |
+| gtid_slave_pos            |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| host                      |
+| index_stats               |
+| innodb_index_stats        |
+| innodb_table_stats        |
+| plugin                    |
+| proc                      |
+| procs_priv                |
+| proxies_priv              |
+| roles_mapping             |
+| servers                   |
+| slow_log                  |
+| table_stats               |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| transaction_registry      |
+| user                      |
++---------------------------+
+31 rows in set (0.000 sec)
+
+```
+
+we find a lot more tables and seeing the table `user`:
+```mysql
+describe user;
+
+MariaDB [mysql]> describe user;
++------------------------+-----------------------------------+------+-----+----------+-------+
+| Field                  | Type                              | Null | Key | Default  | Extra |
++------------------------+-----------------------------------+------+-----+----------+-------+
+| Host                   | char(60)                          | NO   | PRI |          |       |
+| User                   | char(80)                          | NO   | PRI |          |       |
+| Password               | char(41)                          | NO   |     |          |       |
+| Select_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Insert_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Update_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Delete_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Create_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Drop_priv              | enum('N','Y')                     | NO   |     | N        |       |
+| Reload_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Shutdown_priv          | enum('N','Y')                     | NO   |     | N        |       |
+| Process_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| File_priv              | enum('N','Y')                     | NO   |     | N        |       |
+| Grant_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| References_priv        | enum('N','Y')                     | NO   |     | N        |       |
+| Index_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Alter_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Show_db_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| Super_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Create_tmp_table_priv  | enum('N','Y')                     | NO   |     | N        |       |
+| Lock_tables_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Execute_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| Repl_slave_priv        | enum('N','Y')                     | NO   |     | N        |       |
+| Repl_client_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Create_view_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Show_view_priv         | enum('N','Y')                     | NO   |     | N        |       |
+| Create_routine_priv    | enum('N','Y')                     | NO   |     | N        |       |
+| Alter_routine_priv     | enum('N','Y')                     | NO   |     | N        |       |
+| Create_user_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Event_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Trigger_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| Create_tablespace_priv | enum('N','Y')                     | NO   |     | N        |       |
+| Delete_history_priv    | enum('N','Y')                     | NO   |     | N        |       |
+| ssl_type               | enum('','ANY','X509','SPECIFIED') | NO   |     |          |       |
+| ssl_cipher             | blob                              | NO   |     | NULL     |       |
+| x509_issuer            | blob                              | NO   |     | NULL     |       |
+| x509_subject           | blob                              | NO   |     | NULL     |       |
+| max_questions          | int(11) unsigned                  | NO   |     | 0        |       |
+| max_updates            | int(11) unsigned                  | NO   |     | 0        |       |
+| max_connections        | int(11) unsigned                  | NO   |     | 0        |       |
+| max_user_connections   | int(11)                           | NO   |     | 0        |       |
+| plugin                 | char(64)                          | NO   |     |          |       |
+| authentication_string  | text                              | NO   |     | NULL     |       |
+| password_expired       | enum('N','Y')                     | NO   |     | N        |       |
+| is_role                | enum('N','Y')                     | NO   |     | N        |       |
+| default_role           | char(80)                          | NO   |     |          |       |
+| max_statement_time     | decimal(12,6)                     | NO   |     | 0.000000 |       |
++------------------------+-----------------------------------+------+-----+----------+-------+
+```
+
+we see that it has `user` column and `password` column.
+
+```mysql
+select user, password from user;
+```
+
+
+![](attachments/Pasted%20image%2020251125162622.png)
+
+and we find the password hashes of the user `grimmie` and `root`.
+
+
 
