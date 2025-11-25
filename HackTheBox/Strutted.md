@@ -28,3 +28,10 @@ OS and Service detection performed. Please report any incorrect results at https
 Nmap done: 1 IP address (1 host up) scanned in 77.27 seconds
 ```
 
+We see only to ports open. Also we see that the server is configured to respond to the name `strutted.htb` rather than the IP address `10.10.11.59`. See to resolve that we have to edit the `/etc/hosts` file and write `10.10.11.59  strutted.htb`.
+
+```bash
+echo "10.10.11.59 strutted.htb" >> /etc/hosts
+```
+
+
