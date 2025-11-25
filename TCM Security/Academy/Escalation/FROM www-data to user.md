@@ -219,3 +219,5 @@ apt install pspy
 cd /usr/share/pspy
 python3 -m http.server 8003
 ```
+
+and we see 
