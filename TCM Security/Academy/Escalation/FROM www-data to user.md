@@ -213,3 +213,9 @@ I couldn't crack those passwords, so as a last resort I tried to ssh into the ma
 ![](attachments/Pasted%20image%2020251125184328.png)
 
 
+In my attacking machine I downloaded `pspy` and then I opened a python server into that directory `/usr/share/pspy`
+```bash
+apt install pspy
+cd /usr/share/pspy
+python3 -m http.server 8003
+```
