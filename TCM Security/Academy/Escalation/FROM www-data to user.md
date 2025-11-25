@@ -207,5 +207,9 @@ select user, password from user;
 
 and we find the password hashes of the user `grimmie` and `root`.
 
+I couldn't crack those passwords, so as a last resort I tried to ssh into the machine with the credentials that I found for `gremmie` with the password `My_V3ryS3cur3_P4ss` and it worked!!!
+
+
+![](attachments/Pasted%20image%2020251125184328.png)
 
 
