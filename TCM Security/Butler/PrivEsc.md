@@ -36,10 +36,14 @@ and then I run it:
 
 ![](attachments/Pasted%20image%2020251126225511.png)
 
-after `winpeas` ran, I went to `Services Information` and I found a service called `WiseBootAssistant` that auto-runs and the important note was the `No quotes and Space detected`. 
+after `winpeas` ran, I went to `Services Information` and I found a service called `WiseBootAssistant` that auto-runs and the important note was the `No quotes and Space detected`.
+
+	This type of privilege escalation is called **uquoated service paths**
 
 ![](attachments/Pasted%20image%2020251126225926.png)
 
 So all I had to do was write a malware in the path before `BootTime.exe` was executed.
 
-So in the attacking machine I created a malware called 
+In the attacking machine I created a malware called `Wise.exe`:
+
+
