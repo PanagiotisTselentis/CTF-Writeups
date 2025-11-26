@@ -21,3 +21,4 @@ and then I started a python server:
 
 ![](attachments/Pasted%20image%2020251126223551.png)
 
+On the target machine I go to:
