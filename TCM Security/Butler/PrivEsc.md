@@ -50,9 +50,9 @@ In the attacking machine I created a malware called `Wise.exe`:
 
 and in the target machine I change to the directory `C:\Program Files (x86)\Wise` and then I download the malware:
 
-![](attachments/Pasted%20image%2020251126231350.png)
+![](attachments/Pasted%20image%2020251126232116.png)
 
-after I cant just run this `Wise.exe` program because I will still get same user privileges as `butler`. I have to stop the service that is running (in `winpeas` in the same section that said about the no quotes there was the name of the service `WiseBootAssistant`).
+after that I cant just run this `Wise.exe` program because I will still get same user privileges as `butler`. I have to stop the service that is running (in `winpeas` in the same section that said about the no quotes there was the name of the service `WiseBootAssistant`).
 
 So we stop the service:
 
@@ -64,3 +64,8 @@ we check that the service has stopped:
 
 and then we start it back again:
 
+![](attachments/Pasted%20image%2020251126232146.png)
+
+and back at the attacking machine we get a shell:
+
+![](attachments/Pasted%20image%2020251126232248.png)
