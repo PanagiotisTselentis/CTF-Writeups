@@ -1,3 +1,6 @@
+I visited the jenkins that is running on port 8080:
+
+![](attachments/Pasted%20image%2020251126224319.png)
 
 Once logged in we go to `Manage Jetkins` and to `Script Console`: 
 
