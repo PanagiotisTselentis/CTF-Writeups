@@ -17,3 +17,5 @@ I changed the `host` and I copy pasted the reverse shell into the console and I 
 
 and I got a shell!!!
 
+![](attachments/Pasted%20image%2020251126222333.png)
+
