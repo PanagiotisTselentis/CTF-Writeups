@@ -21,4 +21,7 @@ and then I started a python server:
 
 ![](attachments/Pasted%20image%2020251126223551.png)
 
-On the target machine I go to:
+On the target machine I go to a location that is writable like in the `butler` directory:
+
+![](attachments/Pasted%20image%2020251126225052.png)
+
