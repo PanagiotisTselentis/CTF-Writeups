@@ -48,4 +48,4 @@ In the attacking machine I created a malware called `Wise.exe`:
 
 ![](attachments/Pasted%20image%2020251126230822.png)
 
-
+and in the target machine
