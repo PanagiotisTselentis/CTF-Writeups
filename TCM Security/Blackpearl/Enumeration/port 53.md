@@ -30,5 +30,11 @@ Searching for an exploit I found this one from metasploit:
 
 so I went to metasploit to use it:
 
-![](attachments/Pasted%20image%2020251127124249.png)
+![](attachments/Pasted%20image%2020251127124416.png)
+
+and we get a shell:
+
+![](attachments/Pasted%20image%2020251127124447.png)
+
+
 
