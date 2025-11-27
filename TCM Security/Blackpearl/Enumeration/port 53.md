@@ -30,3 +30,5 @@ Searching for an exploit I found this one from metasploit:
 
 so I went to metasploit to use it:
 
+![](attachments/Pasted%20image%2020251127124249.png)
+
