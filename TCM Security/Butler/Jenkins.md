@@ -2,6 +2,8 @@ I visited the jenkins that is running on port 8080:
 
 ![](attachments/Pasted%20image%2020251126224319.png)
 
+In order to log in we can brute force the username and password with burp suite. As by chance I guessed the username and password and it was `username: jenkins` and `password: jenkins` 
+
 Once logged in we go to `Manage Jetkins` and to `Script Console`: 
 
 ![](attachments/Pasted%20image%2020251126221131.png)
