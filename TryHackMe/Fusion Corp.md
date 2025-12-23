@@ -129,4 +129,7 @@ I checked for `Kerberoasting` but it didn't work:
 
 ![](attachments/Pasted%20image%2020251223210221.png)
 
+and enumerating the users with `netexec` I found another set of credentials for user `jmurphy`:
+
+![](attachments/Pasted%20image%2020251223210740.png)
 
