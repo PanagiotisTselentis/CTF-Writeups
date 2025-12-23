@@ -109,3 +109,5 @@ Searching a little more, I found a file called `employees.ods` and then I opened
 
 I copied them to the `usernames.txt` and then I run `kerbrute` again:
 
+![](attachments/Pasted%20image%2020251223204054.png)
+
