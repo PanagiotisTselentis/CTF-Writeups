@@ -81,4 +81,8 @@ My goal was to find usernames so I tried a couple of things with `netexec` with 
 
 ![](attachments/Pasted%20image%2020251223193717.png)
 
+I was able to get a anonymous login to `RPC` but I could not enumerate the users:
+
+![](attachments/Pasted%20image%2020251223193932.png)
+
 
