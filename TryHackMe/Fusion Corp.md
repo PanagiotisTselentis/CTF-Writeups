@@ -116,4 +116,10 @@ Then I checked for AsrepRoasting attack and I was able to find a hash:
 ![](attachments/Pasted%20image%2020251223204712.png)
 
 which I cracked:
+```bash
+hashcat -m 18200 hashes.txt /usr/share/wordlists/rockyou.txt
+```
+
+![](attachments/Pasted%20image%2020251223205103.png)
+
 
