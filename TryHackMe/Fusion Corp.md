@@ -133,3 +133,15 @@ and enumerating the users with `netexec` I found another set of credentials for 
 
 ![](attachments/Pasted%20image%2020251223210740.png)
 
+Also as I was checking with `netexec`:
+
+![](attachments/Pasted%20image%2020251223212207.png)
+
+So I logged in with:
+```bash
+evil-winrm -u 'lparker' -p '!!abbylvzsvs2k6!' -i $target
+```
+and I found the flag!!!
+
+![](attachments/Pasted%20image%2020251223212103.png)
+
