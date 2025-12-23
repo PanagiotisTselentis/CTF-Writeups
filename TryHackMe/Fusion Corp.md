@@ -133,7 +133,7 @@ and enumerating the users with `netexec` I found another set of credentials for 
 
 ![](attachments/Pasted%20image%2020251223210740.png)
 
-Also as I was checking with `netexec`:
+Also as I was checking with `netexec` they can get shell over `winrm`:
 
 ![](attachments/Pasted%20image%2020251223212207.png)
 
@@ -144,4 +144,13 @@ evil-winrm -u 'lparker' -p '!!abbylvzsvs2k6!' -i $target
 and I found the flag!!!
 
 ![](attachments/Pasted%20image%2020251223212103.png)
+
+I run `netexec` with the credentials of `jmurphy` and they also can get shell of `winrm`
+
+![](attachments/Pasted%20image%2020251223214600.png)
+
+and I found the second flag!!!
+
+![](attachments/Pasted%20image%2020251223214643.png)
+
 
