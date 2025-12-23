@@ -85,4 +85,19 @@ I was able to get a anonymous login to `RPC` but I could not enumerate the users
 
 ![](attachments/Pasted%20image%2020251223193932.png)
 
+As I was browsing the site I found this segment with the names of the employees:
+
+![](attachments/Pasted%20image%2020251223202834.png)
+
+So I copy-pasted their names in a file called `names.txt` and then I used a program from Github (https://github.com/mohinparamasivam/AD-Username-Generator) to generate possible AD usernames from their names.
+
+```bash
+python3 username-generator.py -u names.txt -o generated_users.txt
+```
+
+After that I tried to `kerbrute` to see which usernames were valid:
+
+```bash
+kerbrute userenum usernames.txt --dc $target -d fusion.corp
+```
 
