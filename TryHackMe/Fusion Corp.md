@@ -125,4 +125,8 @@ hashcat -m 18200 hashes.txt /usr/share/wordlists/rockyou.txt
 
 ![](attachments/Pasted%20image%2020251223205103.png)
 
+I checked for `Kerberoasting` but it didn't work:
+
+![](attachments/Pasted%20image%2020251223210221.png)
+
 
