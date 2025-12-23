@@ -101,3 +101,11 @@ After that I tried to `kerbrute` to see which usernames were valid:
 kerbrute userenum usernames.txt --dc $target -d fusion.corp
 ```
 
+but I didn't find any valid username.
+
+Searching a little more, I found a file called `employees.ods` and then I opened it with `libreoffice` and I found a lot of usernames:
+
+![](attachments/Pasted%20image%2020251223203804.png)
+
+I copied them to the `usernames.txt` and then I run `kerbrute` again:
+
