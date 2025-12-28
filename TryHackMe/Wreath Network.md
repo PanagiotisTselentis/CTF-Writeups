@@ -82,3 +82,11 @@ chmod +x ./CVE-2019-15107.py
 ![](attachments/Pasted%20image%2020251228211650.png)
 
 and I got a shell.
+
+I went to `/root/.ssh/id_rsa` I copied the `ssh key` and I copied it over to the attacking machine in order to obtain persistent access to the box.
+
+I used the command:
+```bash
+chmod 600 id_rsa
+```
+
